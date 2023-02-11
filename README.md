@@ -14,7 +14,7 @@ The console or command interpreter allows users to do the following:
 ## How to start it
 You will need to clone the repository of the project from Github. This will contain the simple shell program and all of its dependencies.
 
-git clone https://github.com/jzamora5/AirBnB_clone.git
+git clone https://github.com/NwangwuChidera/AirBnB_clone.git
 After cloning the repository you will have a folder called AirBnB_clone. In here there will be several files that allow the program to work.
 
 /console.py : The main executable of the project, the command interpreter.
@@ -76,3 +76,8 @@ Documented commands (type help <topic>):
 EOF  help  quit
 (hbnb) 
 
+
+## AUTHORS
+
+Nwangwu Chidera Pamela
+Emmanuel Oyibo

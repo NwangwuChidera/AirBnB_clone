@@ -79,5 +79,6 @@ EOF  help  quit
 
 ## AUTHORS
 
-Nwangwu Chidera Pamela
+Nwangwu Chidera Pamela 
+
 Emmanuel Oyibo

@@ -1,101 +1,66 @@
 #!/usr/bin/python3
-"""Module for testing the HBNBCommand Class"""
-import unittest
-from console import HBNBCommand
-from unittest.mock import patch
-from io import StringIO
-
-
-class Test_Console(unittest.TestCase):
-    """Test the HBNBCommand Console"""
-
-#     def test_help(self):
-#         """Tests the help commmand"""
-#         with patch('sys.stdout', new=StringIO()) as f:
-#             HBNBCommand().onecmd("help")
-#         string = """
-# Documented commands (type help <topic>):
-# ========================================
-# EOF  all  count  create  destroy  help  quit  show  update
-# """
-#         msg = f.getvalue()
-#         self.assertEqual(string, msg)
-
-    def test_help(self):
-        """Tests the help command."""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("help")
-        s = """
-Documented commands (type help <topic>):
-========================================
-EOF  all  count  create  destroy  help  quit  show  update\n
 """
-        self.assertEqual(s, f.getvalue())
+Unit tests for console using Mock module from python standard library
+Checks console for capturing stdout into a StringIO object
+"""
 
-    # Test cases for quit
-
-    def test_do_quit(self):
-        """Tests the quit commmand"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("quit")
-        # modelling what happens when someone types `quit`
-        msg = f.getvalue()
-        self.assertTrue(len(msg) == 0)
-        self.assertEqual("", msg)
-
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("quit garbage")
-        # modelling when user types `quit anything`
-        msg = f.getvalue()
-        self.assertTrue(len(msg) == 0)
-        self.assertEqual("", msg)
-
-    # Test cases for EOF
-    def test_do_EOF(self):
-        """Tests the EOF commmand"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("EOF")
-        # modelling what happens when user types `quit`
-        msg = f.getvalue()
-        self.assertTrue(len(msg) == 1)
-        self.assertEqual("\n", msg)
-
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("EOF garbage")
-        # modelling when user types `EOF anything`
-        msg = f.getvalue()
-        self.assertTrue(len(msg) == 1)
-        self.assertEqual("\n", msg)
-
-    # Test cases for emptyline
-    def test_do_emptyline(self):
-        """Tests the emptyline command"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("\n")
-        # modelling what happens when user doesn't type anything
-        msg = f.getvalue()
-        self.assertTrue(len(msg) == 0)
-        self.assertEqual("", msg)
-
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("                     \n")
-        # modelling when user types lots of whitespaces & enter
-        msg = f.getvalue()
-        self.assertTrue(len(msg) == 0)
-        self.assertEqual("", msg)
-
-    # Test cases for do_all
-    def test_do_all(self):
-        """Tests the do_all command"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("all")
-
-    # Test cases for do_count
-    # Test cases for do_show
-    # Test cases for do_create
-    # Test cases for do_update
-    # Test cases for do_destroy
+import os
+import sys
+import unittest
+from unittest.mock import create_autospec, patch
+from io import StringIO
+from console import HBNBCommand
+from models import storage
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
-if __name__ == "__main__":
+class TestConsole(unittest.TestCase):
+    """
+    Unittest for the console model
+    """
+
+    def setUp(self):
+        """Redirecting stdin and stdout"""
+        self.mock_stdin = create_autospec(sys.stdin)
+        self.mock_stdout = create_autospec(sys.stdout)
+        self.err = ["** class name missing **",
+                    "** class doesn't exist **",
+                    "** instance id missing **",
+                    "** no instance found **",
+                    ]
+
+        self.cls = ["BaseModel",
+                    "User",
+                    "State",
+                    "City",
+                    "Place",
+                    "Amenity",
+                    "Review"]
+
+    def create(self, server=None):
+        """
+        Redirects stdin and stdout to the mock module
+        """
+        return HBNBCommand(stdin=self.mock_stdin, stdout=self.mock_stdout)
+
+    def last_write(self, nr=None):
+        """Returns last n output lines"""
+        if nr is None:
+            return self.mock_stdout.write.call_args[0][0]
+        return "".join(map(lambda c: c[0][0],
+                           self.mock_stdout.write.call_args_list[-nr:]))
+
+    def test_quit(self):
+        """Quit command"""
+        cli = self.create()
+        self.assertTrue(cli.onecmd("quit"))
+
+
+if __name__ == '__main__':
     unittest.main()

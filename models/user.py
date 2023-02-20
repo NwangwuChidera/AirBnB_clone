@@ -4,6 +4,9 @@
 from models.base_model import BaseModel
 
 
-class State(BaseModel):
-    """Class representing a State."""
-    name = ""
+class User(BaseModel):
+    """User class for the user."""
+    first_name = ""
+    last_name = ""
+    email = ""
+    password = ""

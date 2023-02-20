@@ -169,7 +169,7 @@ The recognizable commands by the interpreter are the following:
 
 ## Authors
 
-Nwangwu Chidera Pamela | Email: [NwangwuChidera](mail:nwangwupamela@gmail.com) 
+Nwangwu Chidera Pamela | Email: [NwangwuChidera](mailto:nwangwupamela@gmail.com) 
 
 Emmanuel Oyibo <[Emminex23](https://github.com/Emminex23)>
 

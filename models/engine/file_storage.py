@@ -53,10 +53,14 @@ class FileStorage:
             return
         with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
             obj_dict = json.load(f)
-            obj_dict = {k: self.classes()[v["__class__"]](**v)
-                        for k, v in obj_dict.items()}
-            # TODO: should this overwrite or insert?
-            FileStorage.__objects = obj_dict
+            new_objs = {}
+            for k, v in obj_dict.items():
+                class_name = v.get("__class__")
+                if class_name in self.classes():
+                    new_obj = self.classes()[class_name](**v)
+                    new_objs[k] = new_obj
+            # Overwrite existing objects with new ones
+            FileStorage.__objects = new_objs
 
     def attributes(self):
         """Returns the valid attributes and their types for classname."""
@@ -90,8 +94,9 @@ class FileStorage:
                       "longitude": float,
                       "amenity_ids": list},
             "Review":
-            {"place_id": str,
-                         "user_id": str,
-                         "text": str}
+                     {"id": str,
+                      "place_id": str,
+                      "user_id": str,
+                      "text": str}
         }
         return attributes

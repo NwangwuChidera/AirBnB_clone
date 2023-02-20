@@ -171,5 +171,4 @@ The recognizable commands by the interpreter are the following:
 
 Nwangwu Chidera Pamela | Email: [NwangwuChidera](mailto:nwangwupamela@gmail.com) 
 
-Emmanuel Oyibo <[Emminex23](https://github.com/Emminex23)>
-
+Emmanuel Oyibo | Github: [EmmanuelOyibo](https://github.com/Emminex23)
